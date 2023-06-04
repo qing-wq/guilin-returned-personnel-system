@@ -1,8 +1,9 @@
+drop database if exists `personnel`;
 create database `personnel`;
 
 use personnel;
 
-DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS sys_user;
 CREATE TABLE user
 (
     `id`          INT(10)      NOT NULL AUTO_INCREMENT COMMENT '业务主键',
@@ -13,7 +14,7 @@ CREATE TABLE user
     `deleted`     tinyint(10)  NOT NULL DEFAULT 0 COMMENT '是否删除',
     PRIMARY KEY (id)
 ) COMMENT = 'user';
-DROP TABLE IF EXISTS user_info;
+DROP TABLE IF EXISTS sys_user_info;
 CREATE TABLE user_info
 (
     `id`             INT(10)      NOT NULL AUTO_INCREMENT COMMENT '业务主键',
@@ -30,7 +31,7 @@ CREATE TABLE user_info
     `before_work`    VARCHAR(255) NOT NULL DEFAULT '' COMMENT '归国前工作',
     PRIMARY KEY (id)
 ) COMMENT = 'user_info';
-DROP TABLE IF EXISTS role;
+DROP TABLE IF EXISTS sys_role;
 CREATE TABLE role
 (
     `id`           INT          NOT NULL AUTO_INCREMENT COMMENT '业务主键',

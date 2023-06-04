@@ -1,4 +1,4 @@
-package ink.whi.entity;
+package ink.whi.entity.base;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

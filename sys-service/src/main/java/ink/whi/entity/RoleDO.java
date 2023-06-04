@@ -1,5 +1,7 @@
 package ink.whi.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+import ink.whi.entity.base.BaseDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -11,7 +13,8 @@ import java.io.Serial;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Role extends BaseDO {
+@TableName("sys_role")
+public class RoleDO extends BaseDO {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -25,6 +28,4 @@ public class Role extends BaseDO {
      * 是否删除
      */
     private Integer deleted;
-
-
 }

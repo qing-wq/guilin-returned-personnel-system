@@ -1,5 +1,7 @@
 package ink.whi.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+import ink.whi.entity.base.BaseDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -11,7 +13,8 @@ import java.io.Serial;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class UserInfo extends BaseDO{
+@TableName("sys_user_info")
+public class UserInfo extends BaseDO {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -19,7 +22,7 @@ public class UserInfo extends BaseDO{
     /**
      * 用户id
      */
-    private String userId;
+    private Long userId;
 
     /**
      * 姓名
@@ -27,34 +30,49 @@ public class UserInfo extends BaseDO{
     private String userInfoName;
 
     /**
+     * 邮箱
+     */
+    private String email;
+
+    /**
+     * 手机号
+     */
+    private String phone;
+
+    /**
      * 所属地区
      */
-    private String regoin;
+    private Long regin_id;
 
     /**
-     * 用户角色
-     */
-    private String userRole;
-
-    /**
-     * 国家
+     * 归国前国家
      */
     private String country;
 
     /**
-     * 归国时间
+     * 国籍
      */
-    private String returnTime;
+    private String nationality;
 
     /**
-     * 归国后工作
+     * 出国时间
      */
-    private String afterWork;
+    private Data goTime;
+
+    /**
+     * 归国时间
+     */
+    private Data returnTime;
 
     /**
      * 归国前工作
      */
     private String beforeWork;
+
+    /**
+     * 归国后工作
+     */
+    private String afterWork;
 
     /**
      * 是否删除

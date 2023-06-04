@@ -1,14 +1,14 @@
 package ink.whi.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+import ink.whi.entity.base.BaseDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serial;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * @author: qing
@@ -16,7 +16,8 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class User extends BaseDO implements UserDetails {
+@TableName("sys_user")
+public class UserDO extends BaseDO {
 
     @Serial
     private static final long serialVersionUID = 1297014780705531534L;
@@ -34,31 +35,4 @@ public class User extends BaseDO implements UserDetails {
      * 是否删除
      */
     private Integer deleted;
-
-    private List<String> roles = new ArrayList<>();
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 }
