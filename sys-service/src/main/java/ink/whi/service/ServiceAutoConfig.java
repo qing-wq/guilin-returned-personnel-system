@@ -1,5 +1,6 @@
-package ink.whi;
+package ink.whi.service;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
@@ -9,5 +10,6 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ComponentScan(basePackages = "ink.whi")
+@MapperScan
 public class ServiceAutoConfig {
 }

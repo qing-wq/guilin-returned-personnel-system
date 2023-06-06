@@ -1,5 +1,6 @@
-package ink.whi.service;
+package ink.whi.service.service;
 
+import ink.whi.api.model.dto.BaseUserInfoDTO;
 import org.springframework.security.core.userdetails.User;
 
 /**
@@ -8,4 +9,6 @@ import org.springframework.security.core.userdetails.User;
  */
 public interface UserService {
     User findByUsername(String username);
+
+    BaseUserInfoDTO passwordLogin(String username, String password);
 }

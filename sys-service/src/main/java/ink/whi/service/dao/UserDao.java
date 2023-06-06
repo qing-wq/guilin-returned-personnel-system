@@ -1,8 +1,9 @@
-package ink.whi.dao;
+package ink.whi.service.dao;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import ink.whi.entity.UserDO;
-import ink.whi.mapper.UserMapper;
+import ink.whi.api.model.dto.BaseUserInfoDTO;
+import ink.whi.service.entity.UserDO;
+import ink.whi.service.mapper.UserMapper;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class UserDao extends ServiceImpl<UserMapper, UserDO> {
-    public UserDO findByUsername(String username) {
+    public BaseUserInfoDTO queryBasicUserInfo(Long userId) {
 
     }
 }

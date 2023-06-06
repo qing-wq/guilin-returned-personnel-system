@@ -1,7 +1,7 @@
-package ink.whi.mapper;
+package ink.whi.service.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import ink.whi.entity.UserDO;
+import ink.whi.service.entity.UserDO;
 
 /**
  * @author: qing

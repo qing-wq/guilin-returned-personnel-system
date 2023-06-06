@@ -1,7 +1,7 @@
-package ink.whi.service.impl;
+package ink.whi.service.service.impl;
 
-import ink.whi.dao.UserDao;
-import ink.whi.service.UserService;
+import ink.whi.service.dao.UserDao;
+import ink.whi.service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
