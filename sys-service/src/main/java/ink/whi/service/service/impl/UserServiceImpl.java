@@ -1,6 +1,10 @@
 package ink.whi.service.service.impl;
 
+import ink.whi.api.model.dto.BaseUserInfoDTO;
+import ink.whi.api.model.exception.BusinessException;
+import ink.whi.api.model.exception.StatusEnum;
 import ink.whi.service.dao.UserDao;
+import ink.whi.service.entity.UserDO;
 import ink.whi.service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -17,7 +21,14 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Override
-    public User findByUsername(String username) {
-        userDao.findByUsername(username);
+    public BaseUserInfoDTO passwordLogin(String username, String password) {
+        UserDO user = userDao.queryUserByUserName(username);
+        if (user == null) {
+            throw BusinessException.newInstance(StatusEnum.USER_NOT_EXISTS, username);
+        }
+        if (!user.getPassword().equals(password)) {
+            throw BusinessException.newInstance(StatusEnum.USER_PWD_ERROR);
+        }
+        return userDao.queryBasicUserInfo(user.getId());
     }
 }

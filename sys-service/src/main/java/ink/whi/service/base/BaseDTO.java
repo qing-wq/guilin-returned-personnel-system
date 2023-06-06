@@ -1,4 +1,4 @@
-package ink.whi.api.model.base;
+package ink.whi.service.base;
 
 import lombok.Data;
 

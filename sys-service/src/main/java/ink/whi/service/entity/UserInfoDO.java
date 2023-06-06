@@ -14,7 +14,7 @@ import java.io.Serial;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("sys_user_info")
-public class UserInfo extends BaseDO {
+public class UserInfoDO extends BaseDO {
 
     @Serial
     private static final long serialVersionUID = 1L;

@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.User;
  * @Date: 2023/5/24
  */
 public interface UserService {
-    User findByUsername(String username);
 
     BaseUserInfoDTO passwordLogin(String username, String password);
 }
