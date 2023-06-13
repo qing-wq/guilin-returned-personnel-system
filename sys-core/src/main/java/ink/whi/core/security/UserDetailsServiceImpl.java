@@ -1,5 +1,6 @@
 package ink.whi.core.security;
 
+import ink.whi.service.entity.UserDO;
 import ink.whi.service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,9 +23,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserService userService;
 
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userService.findByUsername(username);
+        UserDO user = userService.quertByUserName(username);
         if (user == null) {
             throw new UsernameNotFoundException(String.format("No user found with username: %s", username));
         }
@@ -43,6 +45,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             }
         }
 
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.isEnabled(), user.isAccountNonExpired(), user.isCredentialsNonExpired(), user.isAccountNonLocked(), authorities);
+        return new CustomUser();
     }
 }

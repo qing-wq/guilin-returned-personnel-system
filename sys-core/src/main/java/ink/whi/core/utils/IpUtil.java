@@ -1,7 +1,7 @@
 package ink.whi.core.utils;
 
 import com.github.hui.quick.plugin.base.file.FileWriteUtil;
-import ink.whi.core.region.IpRegionInfo;
+import ink.whi.core.utils.region.IpRegionInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;

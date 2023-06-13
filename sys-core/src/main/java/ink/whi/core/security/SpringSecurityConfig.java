@@ -20,7 +20,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/static/**");//放行静态资源
+        web.ignoring().antMatchers("/static/**"); //放行静态资源
     }
 
     @Override

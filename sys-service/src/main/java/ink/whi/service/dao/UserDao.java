@@ -13,8 +13,6 @@ import ink.whi.service.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Wrapper;
-
 /**
  * @author: qing
  * @Date: 2023/5/24
@@ -31,7 +29,7 @@ public class UserDao extends ServiceImpl<UserInfoMapper, UserInfoDO> {
         return UserConverter.toDTO(userInfo);
     }
 
-    public UserDO queryUserByUserName(String username) {
+    public UserDO getUserByUserName(String username) {
         LambdaQueryWrapper<UserDO> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(UserDO::getUsername, username)
                 .eq(UserDO::getDeleted, YesOrNoEnum.NO.getCode());

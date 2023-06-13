@@ -85,6 +85,11 @@
                 <artifactId>qrcode-plugin</artifactId>
                 <version>${qrcode-plugin.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.github.liuyueyi.media</groupId>
+                <artifactId>qrcode-plugin</artifactId>
+                <version>${qrcode-plugin.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

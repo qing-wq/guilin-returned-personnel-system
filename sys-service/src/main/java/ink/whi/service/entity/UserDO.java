@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import ink.whi.service.entity.base.BaseDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.security.core.userdetails.User;
 
 import java.io.Serial;
 

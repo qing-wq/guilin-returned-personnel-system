@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class GlobalInitHelper {
 
-    public static final String SESSION_KEY = "token";
+    public static final String SESSION_KEY = "sys-token";
 
     @Autowired
     private UserDao userDao;
