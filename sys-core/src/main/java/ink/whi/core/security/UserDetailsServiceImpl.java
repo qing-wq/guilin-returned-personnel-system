@@ -1,6 +1,6 @@
 package ink.whi.core.security;
 
-import ink.whi.service.UserService;
+import ink.whi.service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;

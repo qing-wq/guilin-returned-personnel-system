@@ -29,6 +29,8 @@
         <mybaits-plus.version>3.5.2</mybaits-plus.version>
         <commons-io.version>2.11.0</commons-io.version>
         <java.jwt.version>4.2.1</java.jwt.version>
+        <ip2region.version>2.6.6</ip2region.version>
+        <qrcode-plugin.version>3.0.0</qrcode-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -72,6 +74,16 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybaits-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.lionsoul</groupId>
+                <artifactId>ip2region</artifactId>
+                <version>${ip2region.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.liuyueyi.media</groupId>
+                <artifactId>qrcode-plugin</artifactId>
+                <version>${qrcode-plugin.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
