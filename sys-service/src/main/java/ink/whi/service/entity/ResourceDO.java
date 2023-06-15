@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @TableName("sys_region")
-public class RegionDO extends BaseDO {
+public class ResourceDO extends BaseDO {
 
     /**
      * 父ID
@@ -28,6 +28,11 @@ public class RegionDO extends BaseDO {
      * 地区等级; 0-区县, 1-市级
      */
     private Integer regionLevel;
+
+    /**
+     * 资源表达式
+     */
+    private String permission;
 
     /**
      * 是否删除

@@ -1,7 +1,12 @@
 package ink.whi.core.security;
 
-import ink.whi.service.entity.UserDO;
+import ink.whi.api.model.exception.BusinessException;
+import ink.whi.api.model.exception.StatusEnum;
+import ink.whi.service.entity.*;
+import ink.whi.service.mapper.RoleResourceMapper;
+import ink.whi.service.mapper.UserRoleMapper;
 import ink.whi.service.service.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -12,6 +17,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static net.sf.jsqlparser.util.validation.metadata.NamedObject.role;
 
 /**
  * @author: qing
@@ -23,28 +31,32 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserRoleMapper userRoleMapper;
+
+    @Autowired
+    private RoleResourceMapper roleResourceMapper;
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserDO user = userService.quertByUserName(username);
+        UserDO user = userService.queryByUserName(username);
         if (user == null) {
-            throw new UsernameNotFoundException(String.format("No user found with username: %s", username));
+            throw BusinessException.newInstance(StatusEnum.USER_NOT_EXISTS, username);
         }
 
-        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        List<String> roles = user.getRoles();
-        for (String roleName : roles) {
-            Role role = mongoTemplate.findOne(Query.query(Criteria.where("name").is(roleName)), Role.class);
-            if (role == null) {
-                continue;
-            }
-            for (JsonPermissions.SimplePermission permission : role.getPermissions()) {
-                for (String privilege : permission.getPrivileges().keySet()) {
-                    authorities.add(new SimpleGrantedAuthority(String.format("%s-%s", permission.getResourceId(), privilege)));
-                }
-            }
-        }
+        List<SimpleGrantedAuthority> authorities;   // Security权限表达式，如user:add等
+        // 获取用户角色
+        List<UserRoleDO> roles = userRoleMapper.getRoles(user.getId());
+        // 通过角色获取权限
+        List<String> permissions = new ArrayList<>();
+        List<Long> roleIds = roles.stream().map(UserRoleDO::getRoleId).toList();
+        roleIds.forEach(r -> {
+            roleResourceMapper.getResources(r).stream().map(ResourceDO::getPermission).forEach(permissions::add);
+        });
+        authorities = permissions.stream().map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
 
-        return new CustomUser();
-    }
+        return new CustomUser(user, authorities);
+}
 }

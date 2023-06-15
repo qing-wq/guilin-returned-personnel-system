@@ -31,6 +31,7 @@
         <java.jwt.version>4.2.1</java.jwt.version>
         <ip2region.version>2.6.6</ip2region.version>
         <qrcode-plugin.version>3.0.0</qrcode-plugin.version>
+        <commons-lang3.version>3.9</commons-lang3.version>
     </properties>
 
     <dependencyManagement>
@@ -89,6 +90,11 @@
                 <groupId>com.github.liuyueyi.media</groupId>
                 <artifactId>qrcode-plugin</artifactId>
                 <version>${qrcode-plugin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
