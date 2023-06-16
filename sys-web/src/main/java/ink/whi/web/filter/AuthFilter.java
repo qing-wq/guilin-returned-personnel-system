@@ -7,6 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.annotation.Resource;
 import javax.servlet.*;
@@ -21,21 +24,22 @@ import java.net.URLDecoder;
  * @author: qing
  * @Date: 2023/5/6
  */
+@Component
 @Slf4j
 @WebFilter(urlPatterns = "/*", filterName = "authFilter", asyncSupported = true)
-public class AuthFilter implements Filter {
+public class AuthFilter extends OncePerRequestFilter {
     private static final Logger REQ_LOG = LoggerFactory.getLogger("req");
 
     @Resource
     private GlobalInitHelper globalInitService;
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         long start = System.currentTimeMillis();
         HttpServletRequest req = null;
         try {
-            req = initReqInfo((HttpServletRequest) request);
-            CrossUtil.buildCors(req, (HttpServletResponse) response);
+            req = initReqInfo(request);
+            CrossUtil.buildCors(req, response);
             chain.doFilter(req, response);
         }finally {
             buildRequestLog(ReqInfoContext.getReqInfo(), req, System.currentTimeMillis() - start);
