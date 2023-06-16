@@ -6,10 +6,8 @@ import ink.whi.service.entity.*;
 import ink.whi.service.mapper.RoleResourceMapper;
 import ink.whi.service.mapper.UserRoleMapper;
 import ink.whi.service.service.UserService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,8 +16,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static net.sf.jsqlparser.util.validation.metadata.NamedObject.role;
 
 /**
  * @author: qing
@@ -47,10 +43,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         List<SimpleGrantedAuthority> authorities;   // Security权限表达式，如user:add等
         // 获取用户角色
-        List<UserRoleDO> roles = userRoleMapper.getRoles(user.getId());
+        List<UserRegionDO> roles = userRoleMapper.getRoles(user.getId());
         // 通过角色获取权限
         List<String> permissions = new ArrayList<>();
-        List<Long> roleIds = roles.stream().map(UserRoleDO::getRoleId).toList();
+        List<Long> roleIds = roles.stream().map(UserRegionDO::getRoleId).toList();
         roleIds.forEach(r -> {
             roleResourceMapper.getResources(r).stream().map(ResourceDO::getPermission).forEach(permissions::add);
         });
@@ -58,5 +54,5 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .collect(Collectors.toList());
 
         return new CustomUser(user, authorities);
-}
+    }
 }

@@ -9,6 +9,8 @@ import ink.whi.service.dao.UserDao;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -33,9 +35,9 @@ public class GlobalInitHelper {
 
     /**
      * 初始化用户信息
-     * @param reqInfo
+     * @param
      */
-    public void initUserInfo(ReqInfoContext.ReqInfo reqInfo) {
+    public void initUserInfo() {
         HttpServletRequest request =
                 ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         HttpServletResponse response =
@@ -46,10 +48,13 @@ public class GlobalInitHelper {
         for (Cookie cookie : request.getCookies()) {
             if (SESSION_KEY.equalsIgnoreCase(cookie.getName())) {
                 BaseUserInfoDTO user = VerifyToken(cookie.getValue(), response);
-                if (user != null) {
-                    reqInfo.setUserId(user.getUserId());
-                    reqInfo.setUser(user);
-                }
+                // 将用户信息写入Security
+                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user, null, null);
+                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+//                if (user != null) {
+//                    reqInfo.setUserId(user.getUserId());
+//                    reqInfo.setUser(user);
+//                }
                 break;
             }
         }

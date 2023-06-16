@@ -1,7 +1,7 @@
 package ink.whi.service.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import ink.whi.service.entity.UserRoleDO;
+import ink.whi.service.entity.UserRegionDO;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -11,8 +11,8 @@ import java.util.List;
  * @Date: 2023/6/14
  */
 @Component
-public interface UserRoleMapper extends BaseMapper<UserRoleDO> {
+public interface UserRoleMapper extends BaseMapper<UserRegionDO> {
 
     // 获取用户权限
-    List<UserRoleDO> getRoles(Long userId);
+    List<UserRegionDO> getRoles(Long userId);
 }

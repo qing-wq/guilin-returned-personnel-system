@@ -11,8 +11,8 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("sys_user_role")
-public class UserRoleDO extends BaseDO {
+@TableName("sys_user_region")
+public class UserRegionDO extends BaseDO {
 
     /**
      * 用户ID
@@ -20,9 +20,9 @@ public class UserRoleDO extends BaseDO {
     private Long userId;
 
     /**
-     * 角色ID
+     * 地区ID
      */
-    private Long roleId;
+    private Long region;
 
     /**
      * 是否删除

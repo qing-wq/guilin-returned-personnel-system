@@ -9,6 +9,10 @@ import ink.whi.core.utils.SessionUtil;
 import ink.whi.service.service.UserService;
 import ink.whi.web.global.GlobalInitHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +30,9 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping(path = "auth")
 @RestController
 public class LoginRestController {
+
+    @Autowired
+    private AuthenticationManagerBuilder authenticationManagerBuilder;
 
     @Autowired
     private UserService userService;
@@ -52,6 +59,11 @@ public class LoginRestController {
             Cookie cookie = new Cookie(GlobalInitHelper.SESSION_KEY, token);
             cookie.setPath("/");
             response.addCookie(cookie);
+            // 将用户信息存入SpringSecurity
+            UsernamePasswordAuthenticationToken authenticationToken =
+                    new UsernamePasswordAuthenticationToken(username, password);
+            Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
             return ResVo.ok(info);
         } else {
             return ResVo.fail(StatusEnum.LOGIN_FAILED_MIXED, "登录失败，请重试");
