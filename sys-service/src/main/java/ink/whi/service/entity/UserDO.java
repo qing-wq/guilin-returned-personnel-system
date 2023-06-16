@@ -30,6 +30,11 @@ public class UserDO extends BaseDO {
     private String password;
 
     /**
+     * 0-非管理员，1-管理员
+     */
+    private String isAdmin;
+
+    /**
      * 是否删除
      */
     private Integer deleted;

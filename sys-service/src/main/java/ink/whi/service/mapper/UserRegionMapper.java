@@ -11,7 +11,7 @@ import java.util.List;
  * @Date: 2023/6/14
  */
 @Component
-public interface UserRoleMapper extends BaseMapper<UserRegionDO> {
+public interface UserRegionMapper extends BaseMapper<UserRegionDO> {
 
     // 获取用户权限
     List<UserRegionDO> getRoles(Long userId);

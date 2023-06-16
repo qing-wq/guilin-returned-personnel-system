@@ -22,7 +22,7 @@ public class UserRegionDO extends BaseDO {
     /**
      * 地区ID
      */
-    private Long region;
+    private Long regionId;
 
     /**
      * 是否删除
