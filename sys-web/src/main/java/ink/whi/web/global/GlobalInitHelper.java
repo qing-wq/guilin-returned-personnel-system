@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -18,9 +20,13 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 初始化用户信息
+ *
  * @author: qing
  * @Date: 2023/4/27
  */
@@ -35,9 +41,11 @@ public class GlobalInitHelper {
 
     /**
      * 初始化用户信息
+     *
      * @param
+     * @param reqInfo
      */
-    public void initUserInfo() {
+    public void initUserInfo(ReqInfoContext.ReqInfo reqInfo) {
         HttpServletRequest request =
                 ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         HttpServletResponse response =
@@ -49,12 +57,15 @@ public class GlobalInitHelper {
             if (SESSION_KEY.equalsIgnoreCase(cookie.getName())) {
                 BaseUserInfoDTO user = VerifyToken(cookie.getValue(), response);
                 // 将用户信息写入Security
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user, null, null);
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-//                if (user != null) {
-//                    reqInfo.setUserId(user.getUserId());
-//                    reqInfo.setUser(user);
-//                }
+                if (user != null) {
+                    List<GrantedAuthority> authorities;
+                    List<String> permission = userDao.getUserPermission(user.getUserId());
+                    authorities = permission.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user, null, authorities);
+                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                    reqInfo.setUserId(user.getUserId());
+                    reqInfo.setUser(user);
+                }
                 break;
             }
         }

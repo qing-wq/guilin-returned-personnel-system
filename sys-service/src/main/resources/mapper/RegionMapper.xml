@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ink.whi.service.mapper.RegionMapper">
+
+
+    <select id="getUserPermission" resultType="java.lang.String">
+        select r.permission from sys_user_region ur
+        left join sys_region r
+        on ur.region_id = r.id
+        where ur.user_id = #{userId}
+        order by ur.create_time desc
+    </select>
+</mapper>

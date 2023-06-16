@@ -50,14 +50,14 @@ public class AuthFilter implements Filter {
         }
 
         try {
-//            ReqInfoContext.ReqInfo reqInfo = new ReqInfoContext.ReqInfo();
-//            reqInfo.setPath(request.getPathInfo());
-//            reqInfo.setReferer(request.getHeader("referer"));
-//            reqInfo.setUserAgent(request.getHeader("User-Agent"));
-//            request = this.wrapperRequest(request, reqInfo);
+            ReqInfoContext.ReqInfo reqInfo = new ReqInfoContext.ReqInfo();
+            reqInfo.setPath(request.getPathInfo());
+            reqInfo.setReferer(request.getHeader("referer"));
+            reqInfo.setUserAgent(request.getHeader("User-Agent"));
+            request = this.wrapperRequest(request, reqInfo);
             // 校验token
-            globalInitService.initUserInfo();
-//            ReqInfoContext.addReqInfo(reqInfo);
+            globalInitService.initUserInfo(reqInfo);
+            ReqInfoContext.addReqInfo(reqInfo);
         } catch (Exception e) {
             log.error("init reqInfo error: " + e.getMessage());
         }

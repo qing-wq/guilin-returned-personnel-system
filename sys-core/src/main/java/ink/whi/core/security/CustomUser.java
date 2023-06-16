@@ -1,7 +1,6 @@
 package ink.whi.core.security;
 
 import ink.whi.service.entity.UserDO;
-import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
