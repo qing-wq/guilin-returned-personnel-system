@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,7 +39,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw BusinessException.newInstance(StatusEnum.USER_NOT_EXISTS, username);
         }
 
-        List<GrantedAuthority> authorities;   // Security权限表达式，如user:add等
+        List<GrantedAuthority> authorities = Collections.emptyList();   // Security权限表达式，如user:add等
         List<String> permission = userDao.getUserPermission(user.getId());
         authorities = permission.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
         return new CustomUser(user, authorities);

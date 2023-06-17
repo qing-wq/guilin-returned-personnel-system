@@ -32,7 +32,7 @@ public class UserDO extends BaseDO {
     /**
      * 0-非管理员，1-管理员
      */
-    private String isAdmin;
+    private Integer isAdmin;
 
     /**
      * 是否删除

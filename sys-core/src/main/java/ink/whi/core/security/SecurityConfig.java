@@ -31,31 +31,39 @@ import java.util.Collections;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        return  http
                 // 基于 token，不需要 csrf
                 .csrf().disable()
                 // 开启跨域以便前端调用接口
-                .cors().and().authorizeRequests()
+                .cors().and()
+                .authorizeRequests()
                 // 指定某些接口不需要通过验证即可访问。登录接口肯定是不需要认证的
                 .antMatchers("/auth/login").permitAll()
                 // 静态资源，可匿名访问
                 .antMatchers(HttpMethod.GET, "/", "/*.html", "/**/*.html", "/**/*.css", "/**/*.js", "/profile/**").permitAll()
-                .antMatchers("/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/*/api-docs", "/druid/**", "/doc.html").permitAll()
+                .antMatchers("/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/*/api-docs", "/druid/**","/doc.html").permitAll()
                 // 这里意思是其它所有接口需要认证才能访问
-                .anyRequest().authenticated().and()
+                .anyRequest().authenticated()
+                .and()
                 // 基于 token，不需要 session
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 // cors security 解决方案
-                .cors().configurationSource(corsConfigurationSource()).and().build();
+                .cors().configurationSource(corsConfigurationSource())
+                .and()
+                .build();
     }
 
     /**
      * 配置跨源访问(CORS)
-     *
      * @return
      */
     @Bean

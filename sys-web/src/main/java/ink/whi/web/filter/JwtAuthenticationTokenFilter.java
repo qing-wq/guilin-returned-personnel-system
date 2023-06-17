@@ -26,8 +26,7 @@ import java.net.URLDecoder;
  */
 @Component
 @Slf4j
-@WebFilter(urlPatterns = "/*", filterName = "authFilter", asyncSupported = true)
-public class AuthFilter extends OncePerRequestFilter {
+public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     private static final Logger REQ_LOG = LoggerFactory.getLogger("req");
 
     @Resource

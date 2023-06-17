@@ -42,7 +42,7 @@ public class UserInfoDO extends BaseDO {
     /**
      * 所属地区
      */
-    private Long regin_id;
+    private Long regionId;
 
     /**
      * 归国前国家

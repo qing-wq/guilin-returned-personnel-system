@@ -7,6 +7,7 @@ import ink.whi.api.model.vo.ResVo;
 import ink.whi.core.utils.JwtUtil;
 import ink.whi.core.utils.SessionUtil;
 import ink.whi.service.service.UserService;
+import ink.whi.service.service.help.UserPwdEncoder;
 import ink.whi.web.global.GlobalInitHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -37,6 +38,9 @@ public class LoginRestController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserPwdEncoder userPwdEncoder;
+
     /**
      * 登录
      *
@@ -61,7 +65,7 @@ public class LoginRestController {
             response.addCookie(cookie);
             // 将用户信息存入SpringSecurity
             UsernamePasswordAuthenticationToken authenticationToken =
-                    new UsernamePasswordAuthenticationToken(username, password);
+                    new UsernamePasswordAuthenticationToken(username, userPwdEncoder.encode(password));
             Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
             SecurityContextHolder.getContext().setAuthentication(authentication);
             return ResVo.ok(info);
