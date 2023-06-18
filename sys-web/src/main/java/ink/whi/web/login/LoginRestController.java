@@ -33,13 +33,7 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginRestController {
 
     @Autowired
-    private AuthenticationManagerBuilder authenticationManagerBuilder;
-
-    @Autowired
     private UserService userService;
-
-    @Autowired
-    private UserPwdEncoder userPwdEncoder;
 
     /**
      * 登录
@@ -60,14 +54,8 @@ public class LoginRestController {
         // 签发token
         String token = JwtUtil.createToken(info.getUserId());
         if (StringUtils.isNotBlank(token)) {
-            Cookie cookie = new Cookie(GlobalInitHelper.SESSION_KEY, token);
-            cookie.setPath("/");
+            Cookie cookie = SessionUtil.newCookie(GlobalInitHelper.SESSION_KEY, token);
             response.addCookie(cookie);
-            // 将用户信息存入SpringSecurity
-            UsernamePasswordAuthenticationToken authenticationToken =
-                    new UsernamePasswordAuthenticationToken(username, userPwdEncoder.encode(password));
-            Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
             return ResVo.ok(info);
         } else {
             return ResVo.fail(StatusEnum.LOGIN_FAILED_MIXED, "登录失败，请重试");

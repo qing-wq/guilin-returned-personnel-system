@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
  * @date 2023/4/26
  */
 @Configuration
-@ComponentScan(basePackages = "ink.whi")
-@MapperScan
+@ComponentScan(basePackages = "ink.whi.service")
+@MapperScan("ink.whi.service.mapper")
 public class ServiceAutoConfig {
 }

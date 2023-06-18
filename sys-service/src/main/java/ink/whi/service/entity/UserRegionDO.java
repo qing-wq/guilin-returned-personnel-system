@@ -1,7 +1,7 @@
 package ink.whi.service.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import ink.whi.service.entity.base.BaseDO;
+import ink.whi.service.base.BaseDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -15,12 +15,12 @@ import lombok.EqualsAndHashCode;
 public class UserRegionDO extends BaseDO {
 
     /**
-     * 用户ID
+     * 用户id
      */
     private Long userId;
 
     /**
-     * 地区ID
+     * 地区id
      */
     private Long regionId;
 

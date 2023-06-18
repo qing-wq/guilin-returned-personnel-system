@@ -1,4 +1,4 @@
-package ink.whi.core.security;
+package ink.whi.service.security;
 
 import ink.whi.service.entity.UserDO;
 import org.springframework.security.core.GrantedAuthority;

@@ -1,11 +1,12 @@
 package ink.whi.service.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import ink.whi.service.entity.base.BaseDO;
+import ink.whi.service.base.BaseDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serial;
+import java.util.Date;
 
 /**
  * @author: qing
@@ -57,22 +58,22 @@ public class UserInfoDO extends BaseDO {
     /**
      * 出国时间
      */
-    private Data goTime;
+    private Date goTime;
 
     /**
      * 归国时间
      */
-    private Data returnTime;
-
-    /**
-     * 归国前工作
-     */
-    private String beforeWork;
+    private Date returnTime;
 
     /**
      * 归国后工作
      */
     private String afterWork;
+
+    /**
+     * 归国前工作
+     */
+    private String beforeWork;
 
     /**
      * 是否删除

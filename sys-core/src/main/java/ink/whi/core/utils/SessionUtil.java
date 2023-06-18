@@ -8,7 +8,7 @@ import javax.servlet.http.Cookie;
  * @Date: 2023/6/6
  */
 public class SessionUtil {
-    private static final int COOKIE_AGE = 30 * 86400;
+    private static final int COOKIE_AGE = 15 * 24 * 60 * 60 * 1000;
 
     public static Cookie newCookie(String key, String session) {
         return newCookie(key, session, "/", COOKIE_AGE);
@@ -17,7 +17,7 @@ public class SessionUtil {
     public static Cookie newCookie(String key, String session, String path, int maxAge) {
         Cookie cookie = new Cookie(key, session);
         cookie.setPath(path);
-        cookie.setMaxAge(maxAge);
+//        cookie.setMaxAge(maxAge);
         return cookie;
     }
 

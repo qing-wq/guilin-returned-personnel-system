@@ -1,22 +1,17 @@
-package ink.whi.core.security;
+package ink.whi.service.security;
 
 import ink.whi.api.model.exception.BusinessException;
 import ink.whi.api.model.exception.StatusEnum;
 import ink.whi.service.dao.UserDao;
 import ink.whi.service.entity.*;
-import ink.whi.service.mapper.UserRegionMapper;
-import ink.whi.service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,10 +26,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserDao userDao;
 
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserDO user = userDao.queryByUserName(username);
+        System.out.println("user" + user);
         if (user == null) {
             throw BusinessException.newInstance(StatusEnum.USER_NOT_EXISTS, username);
         }

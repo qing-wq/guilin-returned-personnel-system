@@ -31,7 +31,16 @@ import java.util.Collections;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig {
+public class SecurityConfig{
+
+    /**
+     * 密码明文加密方式配置
+     * @return
+     */
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new CustomMd5PasswordEncoder();
+    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {

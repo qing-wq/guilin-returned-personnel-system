@@ -1,10 +1,9 @@
 package ink.whi.service.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import ink.whi.service.entity.base.BaseDO;
+import ink.whi.service.base.BaseDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springframework.security.core.userdetails.User;
 
 import java.io.Serial;
 
