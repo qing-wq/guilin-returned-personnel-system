@@ -5,6 +5,8 @@ import ink.whi.service.base.BaseDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serial;
+
 /**
  * @author: Administrator
  * @Date: 2023/6/4
@@ -13,6 +15,9 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @TableName("sys_region")
 public class RegionDO extends BaseDO {
+
+    @Serial
+    private static final long serialVersionUID = -7870619430038316847L;
 
     /**
      * 父ID

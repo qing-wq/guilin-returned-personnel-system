@@ -5,6 +5,7 @@ import lombok.experimental.Accessors;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author: qing
@@ -15,26 +16,59 @@ import java.io.Serializable;
 public class BaseUserInfoDTO implements Serializable {
     @Serial
     private static final long serialVersionUID = -1854535202157642028L;
+
     /**
      * 用户id
      */
     private Long userId;
 
     /**
-     * 用户名
+     * 姓名
      */
     private String userInfoName;
-    /**
-     * 学号
-     */
-    private String studentId;
 
     /**
-     * 用户角色
+     * 邮箱
      */
-    private String role;
+    private String email;
+
     /**
-     * 年级
+     * 手机号
      */
-    private String grade;
+    private String phone;
+
+    /**
+     * 所属地区
+     */
+    private BaseRegionDTO region;
+
+    /**
+     * 归国前国家
+     */
+    private String country;
+
+    /**
+     * 国籍
+     */
+    private String nationality;
+
+    /**
+     * 出国时间
+     */
+    private Date goTime;
+
+    /**
+     * 归国时间
+     */
+    private Date returnTime;
+
+    /**
+     * 归国后工作
+     */
+    private String afterWork;
+
+    /**
+     * 归国前工作
+     */
+    private String beforeWork;
 }

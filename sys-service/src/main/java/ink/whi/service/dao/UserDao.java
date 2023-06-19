@@ -1,23 +1,21 @@
 package ink.whi.service.dao;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import ink.whi.api.model.dto.BaseUserInfoDTO;
 import ink.whi.api.model.enums.YesOrNoEnum;
+import ink.whi.api.model.exception.BusinessException;
+import ink.whi.api.model.exception.StatusEnum;
+import ink.whi.service.converter.RegionConverter;
 import ink.whi.service.converter.UserConverter;
+import ink.whi.service.entity.RegionDO;
 import ink.whi.service.entity.UserDO;
 import ink.whi.service.entity.UserInfoDO;
-import ink.whi.service.entity.UserRegionDO;
 import ink.whi.service.mapper.RegionMapper;
 import ink.whi.service.mapper.UserInfoMapper;
 import ink.whi.service.mapper.UserMapper;
-import ink.whi.service.mapper.UserRegionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -38,7 +36,17 @@ public class UserDao extends ServiceImpl<UserInfoMapper, UserInfoDO> {
     public BaseUserInfoDTO queryBasicUserInfo(Long userId) {
         UserInfoDO userInfo = lambdaQuery().eq(UserInfoDO::getUserId, userId)
                 .eq(UserInfoDO::getDeleted, YesOrNoEnum.NO.getCode()).one();
-        return UserConverter.toDTO(userInfo);
+        if (userInfo == null) {
+            throw BusinessException.newInstance(StatusEnum.RECORDS_NOT_EXISTS);
+        }
+        BaseUserInfoDTO dto = UserConverter.toDTO(userInfo);
+        return buildBaseUserInfoDTO(dto, userInfo);
+    }
+
+    private BaseUserInfoDTO buildBaseUserInfoDTO(BaseUserInfoDTO dto, UserInfoDO userInfo) {
+        RegionDO region = regionMapper.selectById(userInfo.getRegionId());
+        dto.setRegion(RegionConverter.toDto(region));
+        return dto;
     }
 
     public UserDO getUserByUserName(String username) {
