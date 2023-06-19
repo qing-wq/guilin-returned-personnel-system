@@ -29,7 +29,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserDO user = userDao.queryByUserName(username);
-        System.out.println("user" + user);
         if (user == null) {
             throw BusinessException.newInstance(StatusEnum.USER_NOT_EXISTS, username);
         }

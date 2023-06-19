@@ -29,14 +29,12 @@ public class CustomMd5PasswordEncoder implements PasswordEncoder {
     @Override
     public String encode(CharSequence password) {
         String plainPwd = password.toString();
-        System.out.println(plainPwd);
         if (plainPwd.length() > saltIndex) {
             plainPwd = plainPwd.substring(0, saltIndex) + salt + plainPwd.substring(saltIndex);
         } else {
             plainPwd = plainPwd + salt;
         }
 
-        System.out.println(DigestUtils.md5DigestAsHex(plainPwd.getBytes(StandardCharsets.UTF_8)));
         return DigestUtils.md5DigestAsHex(plainPwd.getBytes(StandardCharsets.UTF_8));
     }
 
