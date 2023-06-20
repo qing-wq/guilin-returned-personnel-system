@@ -13,6 +13,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.annotation.Resource;
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -25,6 +26,7 @@ import java.net.URLDecoder;
  */
 @Slf4j
 @Component
+@WebFilter(urlPatterns = "/*", filterName = "authFilter", asyncSupported = true)
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     private static final Logger REQ_LOG = LoggerFactory.getLogger("req");
 

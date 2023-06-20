@@ -7,13 +7,9 @@ import ink.whi.api.model.vo.ResVo;
 import ink.whi.core.utils.JwtUtil;
 import ink.whi.core.utils.SessionUtil;
 import ink.whi.service.service.UserService;
-import ink.whi.service.service.help.UserPwdEncoder;
 import ink.whi.web.global.GlobalInitHelper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -67,6 +63,7 @@ public class LoginRestController {
      * @param response
      * @return
      */
+    @PreAuthorize("hasAuthority('bnt.sysRole.list')")
     @GetMapping(path = "logout")
     public ResVo<String> logout(HttpServletResponse response) {
         response.addCookie(SessionUtil.delCookie(GlobalInitHelper.SESSION_KEY));

@@ -66,4 +66,8 @@ public class UserDao extends ServiceImpl<UserInfoMapper, UserInfoDO> {
                 .eq(UserDO::getDeleted, YesOrNoEnum.NO.getCode());
         return userMapper.selectOne(wrapper);
     }
+
+    public UserDO queryByUserId(Long userId) {
+        return userMapper.selectById(userId);
+    }
 }

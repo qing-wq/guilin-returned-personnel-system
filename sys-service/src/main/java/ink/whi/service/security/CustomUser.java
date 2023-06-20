@@ -4,6 +4,7 @@ import ink.whi.service.entity.UserDO;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
+import java.io.Serial;
 import java.util.Collection;
 
 /**
@@ -11,6 +12,8 @@ import java.util.Collection;
  * @Date: 2023/6/14
  */
 public class CustomUser extends User {
+    @Serial
+    private static final long serialVersionUID = 8256349424067543946L;
 
     private UserDO userDO;
 
