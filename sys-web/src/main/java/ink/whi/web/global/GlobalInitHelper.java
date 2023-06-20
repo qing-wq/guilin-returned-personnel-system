@@ -64,8 +64,8 @@ public class GlobalInitHelper {
                     List<String> permission = userDao.getUserPermission(user.getUserId());
                     authorities = permission.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
                     UserDO userDO = userDao.queryByUserId(user.getUserId());
-                    CustomUser customUser = new CustomUser(userDO, authorities);
-                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(customUser, null, authorities);
+                    CustomUser principal = new CustomUser(userDO, authorities);
+                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(principal, null, authorities);
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                     reqInfo.setUserId(user.getUserId());
                     reqInfo.setUser(user);

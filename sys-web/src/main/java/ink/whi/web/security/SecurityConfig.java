@@ -1,20 +1,15 @@
-package ink.whi.core.security;
+package ink.whi.web.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import ink.whi.web.filter.JwtAuthenticationTokenFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -30,8 +25,11 @@ import java.util.Collections;
  */
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig{
+
+    private final JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
 
     /**
      * 密码明文加密方式配置
@@ -41,6 +39,16 @@ public class SecurityConfig{
     public PasswordEncoder passwordEncoder(){
         return new CustomMd5PasswordEncoder();
     }
+
+    /**
+     * 添加token登陆验证的过滤器
+     */
+//    @Bean
+//    public TokenAuthenticationFilter tokenAuthenticationFilter() throws Exception {
+//        TokenAuthenticationFilter filter = new TokenAuthenticationFilter();
+//        filter.setAuthenticationManager(authenticationManager());
+//        return filter;
+//    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
@@ -52,6 +60,7 @@ public class SecurityConfig{
         return  http
                 // 基于 token，不需要 csrf
                 .csrf().disable()
+                .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 // 开启跨域以便前端调用接口
                 .cors().and()
                 .authorizeRequests()
@@ -64,7 +73,7 @@ public class SecurityConfig{
                 .anyRequest().authenticated()
                 .and()
                 // 基于 token，不需要 session
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 // cors security 解决方案
                 .cors().configurationSource(corsConfigurationSource())
                 .and()
