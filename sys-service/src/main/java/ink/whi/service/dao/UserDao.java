@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import ink.whi.api.model.dto.BaseUserInfoDTO;
+import ink.whi.api.model.dto.UserRoleDTO;
+import ink.whi.api.model.enums.RoleEnum;
 import ink.whi.api.model.enums.YesOrNoEnum;
 import ink.whi.api.model.exception.BusinessException;
 import ink.whi.api.model.exception.StatusEnum;
@@ -40,12 +42,17 @@ public class UserDao extends ServiceImpl<UserInfoMapper, UserInfoDO> {
             throw BusinessException.newInstance(StatusEnum.RECORDS_NOT_EXISTS);
         }
         BaseUserInfoDTO dto = UserConverter.toDTO(userInfo);
-        return buildBaseUserInfoDTO(dto, userInfo);
+        return buildBaseUserInfoDTO(dto);
     }
 
-    private BaseUserInfoDTO buildBaseUserInfoDTO(BaseUserInfoDTO dto, UserInfoDO userInfo) {
-        RegionDO region = regionMapper.selectById(userInfo.getRegionId());
+    // 补充用户地区，角色等信息
+    private BaseUserInfoDTO buildBaseUserInfoDTO(BaseUserInfoDTO dto) {
+        RegionDO region = regionMapper.selectById(dto.getRegion().getRegionId());
         dto.setRegion(RegionConverter.toDto(region));
+
+        UserDO user = userMapper.selectById(dto.getUserId());
+        UserRoleDTO role = new UserRoleDTO(RoleEnum.role(user.getUserRole()));
+        dto.setRole(role);
         return dto;
     }
 

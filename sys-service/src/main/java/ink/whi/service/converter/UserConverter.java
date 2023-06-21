@@ -1,6 +1,9 @@
 package ink.whi.service.converter;
 
+import ink.whi.api.model.context.ReqInfoContext;
+import ink.whi.api.model.dto.BaseRegionDTO;
 import ink.whi.api.model.dto.BaseUserInfoDTO;
+import ink.whi.api.model.enums.RoleEnum;
 import ink.whi.api.model.vo.user.UserInfoSaveReq;
 import ink.whi.api.model.vo.user.UserSaveReq;
 import ink.whi.service.entity.UserInfoDO;
@@ -39,8 +42,7 @@ public class UserConverter {
         }
         BaseUserInfoDTO user = new BaseUserInfoDTO();
         BeanUtils.copyProperties(info, user);
-        // 设置用户角色
-//        user.setRole(RoleEnum.role(info.getUserRole()));
+        user.setRegion(new BaseRegionDTO().setRegionId(info.getRegionId()));
         return user;
     }
 }

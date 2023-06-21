@@ -29,9 +29,9 @@ public class UserDO extends BaseDO {
     private String password;
 
     /**
-     * 0-非管理员，1-管理员
+     * 0-管理员，1-市级人员，2-区级人员
      */
-    private Integer isAdmin;
+    private Integer userRole;
 
     /**
      * 是否删除

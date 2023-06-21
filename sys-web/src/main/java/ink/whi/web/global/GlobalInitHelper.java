@@ -2,6 +2,7 @@ package ink.whi.web.global;
 
 import ink.whi.api.model.context.ReqInfoContext;
 import ink.whi.api.model.dto.BaseUserInfoDTO;
+import ink.whi.api.model.enums.RoleEnum;
 import ink.whi.api.model.exception.BusinessException;
 import ink.whi.api.model.exception.StatusEnum;
 import ink.whi.core.utils.JwtUtil;
@@ -57,18 +58,22 @@ public class GlobalInitHelper {
         }
         for (Cookie cookie : request.getCookies()) {
             if (SESSION_KEY.equalsIgnoreCase(cookie.getName())) {
-                BaseUserInfoDTO user = VerifyToken(cookie.getValue(), response);
+                BaseUserInfoDTO userInfo = VerifyToken(cookie.getValue(), response);
                 // 将用户信息写入Security
-                if (user != null) {
+                if (userInfo != null) {
+                    // 添加用户权限
                     List<GrantedAuthority> authorities;
-                    List<String> permission = userDao.getUserPermission(user.getUserId());
+                    List<String> permission = userDao.getUserPermission(userInfo.getUserId());
                     authorities = permission.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
-                    UserDO userDO = userDao.queryByUserId(user.getUserId());
-                    CustomUser principal = new CustomUser(userDO, authorities);
+                    UserDO user = userDao.queryByUserId(userInfo.getUserId());
+                    // 添加用户角色
+                    String role = RoleEnum.role(user.getUserRole()).name();
+                    authorities.add(new SimpleGrantedAuthority(role));
+                    CustomUser principal = new CustomUser(user, authorities);
                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(principal, null, authorities);
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-                    reqInfo.setUserId(user.getUserId());
-                    reqInfo.setUser(user);
+                    reqInfo.setUserId(userInfo.getUserId());
+                    reqInfo.setUser(userInfo);
                 }
                 break;
             }

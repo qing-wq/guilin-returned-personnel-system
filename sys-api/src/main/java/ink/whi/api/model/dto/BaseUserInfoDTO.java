@@ -38,6 +38,11 @@ public class BaseUserInfoDTO implements Serializable {
     private String phone;
 
     /**
+     * 用户角色
+     */
+    private UserRoleDTO role;
+
+    /**
      * 所属地区
      */
     private BaseRegionDTO region;

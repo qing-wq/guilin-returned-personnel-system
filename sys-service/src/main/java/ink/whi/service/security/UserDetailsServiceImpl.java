@@ -1,5 +1,6 @@
 package ink.whi.service.security;
 
+import ink.whi.api.model.enums.RoleEnum;
 import ink.whi.api.model.exception.BusinessException;
 import ink.whi.api.model.exception.StatusEnum;
 import ink.whi.service.dao.UserDao;
@@ -33,9 +34,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw BusinessException.newInstance(StatusEnum.USER_NOT_EXISTS, username);
         }
 
-        List<GrantedAuthority> authorities = Collections.emptyList();   // Security权限表达式，如user:add等
+        // 添加用户权限
+        List<GrantedAuthority> authorities = Collections.emptyList();
         List<String> permission = userDao.getUserPermission(user.getId());
         authorities = permission.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+
+        // 添加用户角色
+        String role = RoleEnum.role(user.getUserRole()).name();
+        authorities.add(new SimpleGrantedAuthority(role));
         return new CustomUser(user, authorities);
     }
 }
