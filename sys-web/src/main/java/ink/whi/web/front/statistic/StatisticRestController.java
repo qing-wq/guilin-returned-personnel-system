@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "statistic")
 public class StatisticRestController{
 
-    @PreAuthorize("hasAuthority('region:' + #region)")
+    @PreAuthorize("hasAuthority('region:' + #region) || hasAnyAuthority('ADMIN', 'CITY')")
     @GetMapping(path = "total")
     public ResVo<StatisticVo> queryTotal(@RequestParam(name = "region") String region) {
         return ResVo.ok(new StatisticVo());
