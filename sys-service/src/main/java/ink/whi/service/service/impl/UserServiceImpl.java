@@ -1,6 +1,7 @@
 package ink.whi.service.service.impl;
 
 import ink.whi.api.model.dto.BaseUserInfoDTO;
+import ink.whi.api.model.dto.SimpleUserInfoDTO;
 import ink.whi.api.model.exception.BusinessException;
 import ink.whi.api.model.exception.StatusEnum;
 import ink.whi.service.dao.UserDao;
@@ -15,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import ink.whi.service.service.help.UserPwdEncoder;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -56,5 +58,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDO queryByUserName(String username) {
         return userDao.getUserByUserName(username);
+    }
+
+    @Override
+    public List<SimpleUserInfoDTO> queryByRegion(String region) {
+        return userDao.getUserByRegion(region);
     }
 }

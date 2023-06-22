@@ -31,6 +31,11 @@ public class UserInfoDO extends BaseDO {
     private String userInfoName;
 
     /**
+     * 性别
+     */
+    private Integer gender;
+
+    /**
      * 邮箱
      */
     private String email;
